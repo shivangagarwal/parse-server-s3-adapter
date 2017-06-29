@@ -56,12 +56,12 @@ S3Adapter.prototype.createBucket = function() {
 
 // For a given config object, filename, and data, store a file in S3
 // Returns a promise containing the S3 object creation response
-S3Adapter.prototype.createFile = function(filename, data, contentType) {
+S3Adapter.prototype.createFile = function(filename, data, contentType, isPublic = true) {
   let params = {
     Key: this._bucketPrefix + filename,
     Body: data
   };
-  if (this._directAccess) {
+  if (this._directAccess && isPublic) {
     params.ACL = "public-read"
   }
   if (contentType) {
